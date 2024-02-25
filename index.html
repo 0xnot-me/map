@@ -1,0 +1,152 @@
+<!-- Get spreadsheet data on server -->
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Independence</title>
+        <link rel="stylesheet" href="styles.css" type="text/css">
+        <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="loader">
+            <div class="lds-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <div style="display:none;">
+            <img src="guard_tower.png" id="img-tower"/>
+            <img src="clay.png" id="img-clay"/>
+            <img src="tar_barrel.png" id="img-tar"/>
+            <img src="special.png" id="img-special"/>
+            <img src="lodestone.png" id="img-lodestone"/>
+        </div>
+        <div id="location" class="loading"></div>
+        <div id="legend-btn" class="loading"></div>
+        <div id="zoom-in" class="loading">+</div>
+        <div id="zoom-out" class="loading">-</div>
+        <div class="section hide" id="section-legend">
+            <h2>Legend</h2>
+            <img src="legend.png"/>
+        </div>
+        <div id="sidebar" class="loading">
+            <h1>Independence</h1>
+            <div class="section" id="section-map">
+                <h2>Map type</h2>
+                <div>
+                    <label>
+                        <input type="radio" name="map-type" value="map-type-terrain" checked/>Terrain
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input type="radio" name="map-type" value="map-type-topo"/>Topographic
+                    </label>
+                </div>
+            </div>
+            <div class="section" id="section-layers">
+                <h2>Layers</h2>
+                <div>
+                    <label>
+                        <input id="layers-deeds" type="checkbox" checked/>Deeds (D)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input id="layers-highways" type="checkbox" checked/>Highways (H)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input id="layers-bridges" type="checkbox" checked/>Bridges (B)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input id="layers-tunnels" type="checkbox" checked/>Tunnels (T)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input id="layers-resources" type="checkbox"/>Resources (R)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input id="layers-specials" type="checkbox"/>Special places (S)
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input id="layers-grid" type="checkbox"/>Grid (G)
+                    </label>
+                </div>
+            </div>
+            <div class="section" id="section-location">
+                <h2>Selected Location</h2>
+                <div id="location-selected">
+                    <input type="text" value="Click to select"/>
+                </div>
+            </div>
+            <div class="section" id="section-search">
+                <div id=find-header>
+                    Find
+                
+                    <div id="find-deed">
+                        <label>
+                            <input type="radio" id="rad-find-deed" name="find-type" value="find-type-deed" checked/>deed
+                        </label>
+                    </div>
+                    <div id="find-special">
+                        <label>
+                            <input type="radio" name="find-type" value="find-type-special"/>special
+                        </label>
+                    </div>
+                </div>
+                <select>
+                    <option></option>
+                </select>
+            </div>
+        </div>
+        <div id="footer-text" class="loading">
+            Latest update: <span id="last-update">dd.mm.yy</span>
+            <br>
+            SW version: <span id="sw-version">v.vv</span>
+            <br>&copy;2023 by Substr & Yaga
+    
+        </div>
+        <canvas id="map" width="2048" height="2048"></canvas>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+        <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/2.4.6/fabric.min.js"></script> -->
+        <script src="fabric.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/g/filesaver.js"></script>
+        <script src="canvas-toBlob.js"></script>
+        <script>
+            window.sheetData = {
+                "valueRanges": [{
+                    "range": "Deeds!A2:E793",
+                    "majorDimension": "ROWS",
+                    "values": [["Wiener Wonderland", "958", "1594", "TOP"], ["Juicy", "860", "1360"], ["OUR WALL", "2322", "1309"], ["Sparta Cap", "1572", "3008"], ["HOM", "1083", "2180"], ["Chokepoint", "1303", "1788"], ["SKOLL", "709", "614"], ["Keepers", "2197", "770"], ["Libila Dom", "3366", "382"]]
+                }, {
+                    "range": "Special!A2:E1026",
+                    "majorDimension": "ROWS",
+                    "values": [["Stone Valley", "1305", "1289", "MissionStructure"], ["Firecat 146", "911", "1471", "GuardTowerFreedom"]]
+                },{
+                    "range": "System!A2:B1000",
+                    "majorDimension": "ROWS",
+                    "values": [["24-Jul-2022"]]
+                }]
+            };
+        </script>
+        <script src="map.js"></script>
+        <script>
+            $(function() {
+                new map();
+            });
+        </script>
+    </body>
+</html>
